@@ -1,295 +1,214 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>MATADI FANS – Marketplace Locale</title>
+<title>Matadi Fans - OnlyFans Style</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
-/* ================== VARIABLES ================== */
 :root{
-  --bg:#0a0d14;
-  --sidebar:#020617;
-  --panel:#111827;
-  --card:#1f2937;
-  --accent:#22c55e;
-  --blue:#3b82f6;
-  --danger:#ef4444;
-  --text:#e5e7eb;
-  --muted:#9ca3af;
+  --bg:#0b0c10;
+  --card:#1f1f1f;
+  --text:#e5e5e5;
+  --muted:#aaa;
+  --accent:#ff3c3c;
+  --blue:#22a6f3;
+  --green:#27ae60;
 }
-
-/* ================== RESET ================== */
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
 body{background:var(--bg);color:var(--text);overflow:hidden}
+button{cursor:pointer;border:none;border-radius:6px;padding:8px 12px;font-weight:bold;transition:0.3s;}
+button:hover{opacity:0.8}
 .hidden{display:none}
 
-/* ================== AUTH ================== */
-.auth{
-  position:fixed;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,#020617,#111827)
-}
-.auth-box{
-  width:460px;background:var(--panel);
-  padding:30px;border-radius:22px;
-  box-shadow:0 0 60px #000;
-}
-.auth-box h1{text-align:center;color:var(--accent)}
-.auth-box p{text-align:center;color:var(--muted);margin-bottom:20px}
-.auth-box input, .auth-box select{
-  width:100%;padding:15px;margin-bottom:12px;
-  border:none;border-radius:14px;
-  background:#020617;color:white;font-size:15px
-}
-.auth-box button{
-  width:100%;padding:15px;
-  border:none;border-radius:14px;
-  background:var(--accent);
-  color:#022c22;font-weight:bold;font-size:16px
-}
-.switch{text-align:center;margin-top:15px;color:var(--blue);cursor:pointer}
+/* AUTH */
+.auth{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;background:linear-gradient(135deg,#0b0c10,#1f1f1f);}
+.auth-box{background:var(--card);padding:30px;width:360px;border-radius:15px;box-shadow:0 0 40px #000;}
+.auth-box h2{text-align:center;margin-bottom:15px}
+.auth-box input, .auth-box select{width:100%;padding:12px;margin-bottom:12px;background:#111;color:#fff;border-radius:8px;border:1px solid #333;font-size:14px}
+.auth-box button{width:100%;background:var(--accent);color:#fff;margin-bottom:8px}
+.switch{text-align:center;color:var(--blue);cursor:pointer;font-size:13px}
 
-/* ================== APP LAYOUT ================== */
-.app{display:flex;height:100vh}
+/* APP */
+.app{display:flex;height:100vh;overflow:hidden}
 
-/* ================== SIDEBAR ================== */
-.sidebar{
-  width:280px;background:var(--sidebar);
-  padding:20px;display:flex;flex-direction:column
-}
+/* SIDEBAR */
+.sidebar{width:260px;background:#111;padding:20px;display:flex;flex-direction:column;flex-shrink:0}
 .sidebar h2{color:var(--accent);margin-bottom:20px}
-.sidebar a{
-  padding:14px;border-radius:14px;
-  color:var(--text);text-decoration:none;
-  margin-bottom:8px
-}
-.sidebar a:hover{background:var(--card)}
+.sidebar div{margin-bottom:12px;color:var(--muted);cursor:pointer;font-size:14px;padding:8px;border-radius:8px}
+.sidebar div:hover{background:#222;color:#fff}
 .sidebar .bottom{margin-top:auto}
 
-/* ================== MAIN ================== */
-.main{flex:1;display:flex}
+/* TOPBAR */
+.topbar{background:#111;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #222}
 
-/* ================== FEED ================== */
-.feed{
-  flex:2;padding:25px;overflow-y:auto
-}
-.feed h3{margin-bottom:15px}
+/* FEED */
+.feed{flex:1;overflow-y:auto;padding:20px}
+.post{background:var(--card);border-radius:15px;padding:15px;margin-bottom:20px;transition:0.3s}
+.post:hover{background:#222}
+.post-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.avatar{width:48px;height:48px;border-radius:50%;background:#555;flex-shrink:0}
+.post img{width:100%;border-radius:12px;margin-top:10px}
+.actions{display:flex;gap:12px;margin-top:10px;font-size:14px}
+.actions span{cursor:pointer;transition:0.3s}
+.actions span:hover{color:var(--accent)}
 
-.post{
-  background:var(--card);
-  border-radius:22px;
-  padding:18px;margin-bottom:22px
-}
-.post-header{
-  display:flex;align-items:center;gap:12px
-}
-.avatar{
-  width:48px;height:48px;border-radius:50%;
-  background:#000
-}
-.post img{
-  width:100%;border-radius:18px;margin-top:12px
-}
-.actions{
-  display:flex;gap:20px;
-  margin-top:12px;font-size:18px
-}
-.actions span{cursor:pointer}
+/* MODAL */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.75);display:none;align-items:center;justify-content:center;z-index:999;}
+.modal-content{background:var(--card);padding:25px;width:90%;max-width:420px;border-radius:15px}
+.modal-content textarea,input{width:100%;padding:12px;margin-bottom:10px;background:#111;border-radius:8px;color:#fff;border:none}
 
-/* ================== LOCK ================== */
-.lock{
-  background:#020617;
-  padding:30px;border-radius:16px;
-  text-align:center;color:var(--muted)
-}
+/* PROFILE PANEL */
+.profile-panel{padding:20px;overflow-y:auto;flex:1}
+.card{background:var(--card);padding:15px;border-radius:12px;margin-bottom:15px}
+.card h3{margin-bottom:8px}
 
-/* ================== RIGHT PANEL ================== */
-.right{
-  width:380px;background:var(--panel);
-  padding:25px;overflow-y:auto
-}
-.card{
-  background:var(--card);
-  border-radius:20px;
-  padding:18px;margin-bottom:20px
-}
-.card button{
-  width:100%;padding:14px;
-  border:none;border-radius:14px;
-  background:var(--accent);font-weight:bold
-}
-
-/* ================== DASHBOARD ================== */
-.dashboard{
-  padding:25px;overflow-y:auto
-}
-.stat{
-  display:flex;justify-content:space-between;
-  margin-bottom:10px
-}
-
-/* ================== MODAL ================== */
-.modal{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.75);
-  display:none;align-items:center;justify-content:center
-}
-.modal-content{
-  width:480px;background:var(--panel);
-  padding:25px;border-radius:22px
-}
-.modal-content textarea,input{
-  width:100%;padding:14px;
-  border:none;border-radius:14px;
-  background:#020617;color:white;margin-bottom:12px
-}
-.modal-content button{
-  width:100%;padding:14px;
-  border:none;border-radius:14px;
-  background:var(--accent);font-weight:bold
-}
+/* ANIMATIONS */
+.like-anim{animation:likePop 0.5s ease;}
+@keyframes likePop{0%{transform:scale(1)}50%{transform:scale(1.5)}100%{transform:scale(1)}}
 </style>
 </head>
-
 <body>
 
-<!-- ================== AUTH ================== -->
+<!-- AUTH -->
 <div class="auth" id="auth">
-  <div class="auth-box" id="loginBox">
-    <h1>MATADI FANS</h1>
-    <p>Produits & services locaux</p>
-    <input placeholder="Email">
-    <input placeholder="Mot de passe" type="password">
-    <button onclick="login()">Connexion</button>
+  <div class="auth-box" id="registerBox">
+    <h2>Créer un compte</h2>
+    <input id="name" placeholder="Nom">
+    <input id="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Mot de passe">
+    <select id="role">
+      <option value="client">Acheteur</option>
+      <option value="vendeur">Vendeur</option>
+      <option value="prestataire">Prestataire</option>
+    </select>
+    <button onclick="register()">S'inscrire</button>
+    <div class="switch" onclick="toggleAuth()">Déjà un compte ? Connexion</div>
+  </div>
+  <div class="auth-box hidden" id="loginBox">
+    <h2>Connexion</h2>
+    <input id="emailL" placeholder="Email">
+    <input id="passwordL" type="password" placeholder="Mot de passe">
+    <button onclick="login()">Se connecter</button>
     <div class="switch" onclick="toggleAuth()">Créer un compte</div>
   </div>
-
-  <div class="auth-box hidden" id="registerBox">
-    <h1>Créer un compte</h1>
-    <input placeholder="Nom">
-    <select>
-      <option>Client</option>
-      <option>Vendeur / Prestataire</option>
-    </select>
-    <input placeholder="Ville (Matadi)">
-    <input placeholder="Email">
-    <input placeholder="Mot de passe" type="password">
-    <button onclick="login()">Créer</button>
-    <div class="switch" onclick="toggleAuth()">Déjà inscrit ?</div>
-  </div>
 </div>
 
-<!-- ================== APP ================== -->
+<!-- APP -->
 <div class="app hidden" id="app">
-
-  <!-- SIDEBAR -->
   <div class="sidebar">
     <h2>MATADI FANS</h2>
-    <a onclick="showFeed()">🏠 Feed</a>
-    <a onclick="showExplorer()">🔍 Explorer</a>
-    <a onclick="showSubs()">⭐ Abonnements</a>
-    <a onclick="showDashboard()">📊 Tableau Pro</a>
-    <a onclick="openPost()">➕ Publier</a>
-    <div class="bottom">
-      <a onclick="logout()">🚪 Déconnexion</a>
-    </div>
+    <div onclick="loadFeed()">🏠 Feed</div>
+    <div onclick="createPost()">➕ Publier</div>
+    <div onclick="profilePanel()">👤 Profil</div>
+    <div onclick="logout()">🚪 Déconnexion</div>
+    <div class="bottom">Version OnlyFans-style • Matadi</div>
   </div>
-
-  <!-- MAIN -->
-  <div class="main">
-
-    <!-- FEED -->
-    <div class="feed" id="feed">
-      <h3>🔥 Activité à Matadi</h3>
-
-      <div class="post">
-        <div class="post-header">
-          <div class="avatar"></div>
-          <strong>Plombier Junior • ⭐4.8</strong>
-        </div>
-        <p>Disponible aujourd’hui – intervention rapide 🔧</p>
-        <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952">
-        <div class="actions">
-          ❤️ <span onclick="like(this)">14</span>
-          💬 3
-          ⭐ S’abonner
-        </div>
-      </div>
-
-      <div class="post">
-        <div class="post-header">
-          <div class="avatar"></div>
-          <strong>Mécanicien Pro</strong>
-        </div>
-        <div class="lock">
-          🔒 Contenu réservé aux abonnés<br>
-          Abonne-toi pour voir les tarifs
-        </div>
-      </div>
-
+  <div style="flex:1;display:flex;flex-direction:column">
+    <div class="topbar">
+      <span id="userInfo"></span>
+      <span>Local • Matadi</span>
     </div>
-
-    <!-- RIGHT -->
-    <div class="right">
-      <div class="card">
-        <h3>👤 Ton profil</h3>
-        <p>Utilisateur – Matadi</p>
-        <button>Voir profil</button>
-      </div>
-
-      <div class="card">
-        <h3>🔥 Top prestataires</h3>
-        <p>Commissionnaire Express ⭐5.0</p>
-        <p>Fashion Matadi ⭐4.7</p>
-      </div>
-    </div>
-
-    <!-- DASHBOARD -->
-    <div class="dashboard hidden" id="dashboard">
-      <h2>📊 Tableau Créateur</h2>
-      <div class="stat"><span>Abonnés</span><strong>128</strong></div>
-      <div class="stat"><span>Posts</span><strong>42</strong></div>
-      <div class="stat"><span>Réservations</span><strong>19</strong></div>
-      <div class="stat"><span>Note moyenne</span><strong>⭐4.8</strong></div>
-    </div>
-
+    <div class="feed" id="feed"></div>
   </div>
 </div>
 
-<!-- ================== MODAL POST ================== -->
+<!-- MODAL -->
 <div class="modal" id="postModal">
   <div class="modal-content">
-    <h3>Nouveau post</h3>
-    <textarea placeholder="Description"></textarea>
-    <input placeholder="Image (URL)">
-    <button onclick="closePost()">Publier</button>
+    <h3>Créer un post</h3>
+    <input id="postTitle" placeholder="Titre du post">
+    <textarea id="postDesc" placeholder="Description"></textarea>
+    <input id="postImage" placeholder="Image URL (optionnel)">
+    <button onclick="submitPost()">Publier</button>
   </div>
 </div>
 
 <script>
+let users = JSON.parse(localStorage.getItem("users")||"[]");
+let posts = JSON.parse(localStorage.getItem("posts")||"[]");
+let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+if(currentUser) startApp();
+
 function toggleAuth(){
-  loginBox.classList.toggle("hidden");
   registerBox.classList.toggle("hidden");
+  loginBox.classList.toggle("hidden");
 }
+
+function register(){
+  const n=name.value,e=email.value,p=password.value,r=role.value;
+  if(!n||!e||!p){alert("Remplir tous les champs");return;}
+  if(users.some(u=>u.email===e)){alert("Email déjà utilisé");return;}
+  const u={name:n,email:e,pw:p,role:r};
+  users.push(u);localStorage.setItem("users",JSON.stringify(users));
+  currentUser=u;localStorage.setItem("currentUser",JSON.stringify(currentUser));
+  startApp();
+}
+
 function login(){
+  const e=emailL.value,p=passwordL.value;
+  const u=users.find(x=>x.email===e && x.pw===p);
+  if(!u){alert("Email ou mot de passe incorrect");return;}
+  currentUser=u;localStorage.setItem("currentUser",JSON.stringify(currentUser));
+  startApp();
+}
+
+function logout(){localStorage.removeItem("currentUser");location.reload();}
+
+function startApp(){
   auth.classList.add("hidden");
   app.classList.remove("hidden");
+  userInfo.innerText=currentUser.name+" • "+currentUser.role;
+  loadFeed();
 }
-function logout(){location.reload()}
-function like(el){el.innerText=parseInt(el.innerText)+1}
-function openPost(){postModal.style.display="flex"}
-function closePost(){postModal.style.display="none"}
-function showDashboard(){
-  feed.classList.add("hidden");
-  dashboard.classList.remove("hidden");
+
+function loadFeed(){
+  feed.innerHTML="";
+  if(posts.length===0){feed.innerHTML="<p style='color:#888'>Aucun post pour le moment</p>";return;}
+  posts.forEach((p,i)=>{
+    const d=document.createElement("div");
+    d.className="post";
+    d.innerHTML=`
+      <div class="post-header"><div class="avatar"></div><strong>${p.title} - ${p.author}</strong></div>
+      <p>${p.desc}</p>
+      ${p.img?`<img src="${p.img}">`:''}
+      <div class="actions">
+        <span onclick="like(${i},this)">❤️ ${p.likes}</span>
+        <span>⭐ S'abonner</span>
+      </div>
+    `;
+    feed.appendChild(d);
+  });
 }
-function showFeed(){
-  dashboard.classList.add("hidden");
-  feed.classList.remove("hidden");
+
+function like(i,el){
+  posts[i].likes++;
+  localStorage.setItem("posts",JSON.stringify(posts));
+  el.classList.add("like-anim");
+  setTimeout(()=>el.classList.remove("like-anim"),500);
+  loadFeed();
 }
-function showExplorer(){alert("Explorer – à venir")}
-function showSubs(){alert("Abonnements – simulé")}
+
+function createPost(){postModal.style.display="flex";}
+
+function submitPost(){
+  const t=document.getElementById("postTitle").value,
+        d=document.getElementById("postDesc").value,
+        i=document.getElementById("postImage").value;
+  if(!t){alert("Titre requis");return;}
+  posts.unshift({title:t,desc:d,img:i,author:currentUser.name,likes:0});
+  localStorage.setItem("posts",JSON.stringify(posts));
+  postModal.style.display="none";
+  document.getElementById("postTitle").value="";
+  document.getElementById("postDesc").value="";
+  document.getElementById("postImage").value="";
+  loadFeed();
+}
+
+function profilePanel(){
+  let html=`<div class="card"><h3>Profil de ${currentUser.name}</h3><p>Rôle : ${currentUser.role}</p><p>Email : ${currentUser.email}</p></div>`;
+  feed.innerHTML=html;
+}
 </script>
 
 </body>
